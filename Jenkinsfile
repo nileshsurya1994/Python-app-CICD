@@ -2,16 +2,6 @@
 pipeline {
     agent any
 
-    environment {
-        // Define any environment variables here
-      
-        //DOCKERHUB_USERNAME = 'your-dockerhub-username'
-        //DOCKERHUB_PASSWORD = 'your-dockerhub-password'
-        //IMAGE_NAME = 'your-image-name'
-        //CONTAINER_NAME = 'your-container-name'
-        
-    }
-
     stages {
         stage('Checkout') {
             steps {
