@@ -31,7 +31,7 @@ pipeline {
         
         stage("deploy") {
             steps {
-                sh "sudo docker run -d --name python-app-run -p 80:80 python-app-img"
+                sh "sudo docker run -d --name python-app-run -p 80:8000 python-app-img"
                 echo 'Deployment completed'
             }
         }
