@@ -16,7 +16,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clone the Git repository
-                git 'https://github.com/nileshsurya1994/python-for-devops.git'
+                git 'https://github.com/nileshsurya1994/Python-app-CICD.git'
             }
         }
 
