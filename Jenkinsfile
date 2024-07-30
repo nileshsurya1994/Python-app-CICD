@@ -1,40 +1,48 @@
-
 pipeline {
     agent any
-
+    
     stages {
-        stage('Checkout') {
+        stage("code") {
             steps {
-                // Clone the Git repository
-                git 'https://github.com/nileshsurya1994/Python-app-CICD.git'
+                git url: "https://github.com/nileshsurya1994/Python-app-CICD.git", branch: "main"
+                echo 'Code clone successful..'
             }
         }
-
-        stage('Build Docker Image') {
+        
+        stage("build and test") {
             steps {
-                script {
-                    // Build the Docker image
-                    sh 'docker build -t python-hello-word .'
-                }
+                sh "sudo docker build -t python-app-img ."
+                echo 'Build successful'
             }
         }
-
-        stage('Run Docker Container') {
+        
+        stage("scan image") {
             steps {
-                script {
-                    // Run the Docker container
-                    sh 'docker run -d -p 80:80 python-hello-word'
-                }
+                echo 'Image scanning completed....'
+            }
+        }
+        
+        stage("Existing container Remove") {
+            steps {
+                sh "sudo docker rm -f python-app-run"
+                echo 'Existing container removed'
+            }
+        }
+        
+        stage("deploy") {
+            steps {
+                sh "sudo docker run -d --name python-app-run -p 80:80 python-app-img"
+                echo 'Deployment completed'
             }
         }
     }
-
+    
     post {
-        always {
-            // Clean up Docker containers and images
-            sh 'docker stop $(docker ps -q)'
-            sh 'docker rm $(docker ps -a -q)'
-            sh 'docker rmi $(docker images -q)'
+        success {
+            echo 'Pipeline successfully executed!'
+        }
+        failure {
+            echo 'Pipeline failed :('
         }
     }
 }
