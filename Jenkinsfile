@@ -32,19 +32,21 @@ pipeline {
         
         stage("Scan Image") {
             steps {
-                script {
-                    // Authenticate Docker with GitHub Container Registry
-                    sh """
-                        echo "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" | sudo docker login ghcr.io -u nileshsurya1994 --password-stdin
-                    """
-                    
-                    // Pull Trivy image
-                    sh "sudo docker pull ghcr.io/aquasec/trivy:latest"
-                    
-                    // Scan the Docker image with Trivy
-                    sh "sudo docker run --rm ghcr.io/aquasec/trivy:latest image --no-progress python-app-img"
-                    
-                    echo 'Image scanning completed...'
+                withCredentials([string(credentialsId: 'github-pat', variable: 'GITHUB_PAT')]) {
+                    script {
+                        // Authenticate Docker with GitHub Container Registry
+                        sh """
+                            echo "${GITHUB_PAT}" | sudo docker login ghcr.io -u nileshsurya1994 --password-stdin
+                        """
+                        
+                        // Pull Trivy image
+                        sh "sudo docker pull ghcr.io/aquasec/trivy:latest"
+                        
+                        // Scan the Docker image with Trivy
+                        sh "sudo docker run --rm ghcr.io/aquasec/trivy:latest image --no-progress python-app-img"
+                        
+                        echo 'Image scanning completed...'
+                    }
                 }
             }
         }
