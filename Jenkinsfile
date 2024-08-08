@@ -35,7 +35,7 @@ pipeline {
                 script {
                     // Authenticate Docker with GitHub Container Registry
                     sh """
-                        echo "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" | sudo docker login ghcr.io -u nileshsurya1994 --password-stdin
+                        echo "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" | sudo docker login ghcr.io -u nileshsurya1994 --password-stdin
                     """
                     
                     // Pull Trivy image
