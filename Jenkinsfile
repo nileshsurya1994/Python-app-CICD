@@ -33,6 +33,11 @@ pipeline {
         stage("Scan Image") {
             steps {
                 script {
+                    // Authenticate Docker with GitHub Container Registry
+                    sh """
+                        echo "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" | sudo docker login ghcr.io -u nileshsurya1994 --password-stdin
+                    """
+                    
                     // Pull Trivy image
                     sh "sudo docker pull ghcr.io/aquasec/trivy:latest"
                     
