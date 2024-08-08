@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     stages {
         stage("Code") {
             steps {
@@ -32,11 +32,11 @@ pipeline {
         
         stage("Scan Image") {
             steps {
-                withCredentials([string(credentialsId: 'github-pat', variable: 'GITHUB_PAT')]) {
-                    script {
+                script {
+                    withCredentials([string(credentialsId: 'github-pat', variable: 'GITHUB_PAT')]) {
                         // Authenticate Docker with GitHub Container Registry
                         sh """
-                            echo "${GITHUB_PAT}" | sudo docker login ghcr.io -u nileshsurya1994 --password-stdin
+                            echo ${GITHUB_PAT} | sudo docker login ghcr.io -u nileshsurya1994 --password-stdin
                         """
                         
                         // Pull Trivy image
