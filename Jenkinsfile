@@ -40,7 +40,7 @@ pipeline {
                         """
                         
                         // Pull Trivy image
-                        sh "sudo docker pull ghcr.io/aquasec/trivy:latest"
+                        sh "sudo docker pull aquasec/trivy:latest"
                         
                         // Scan the Docker image with Trivy
                         sh "sudo docker run --rm ghcr.io/aquasec/trivy:latest image --no-progress python-app-img"
