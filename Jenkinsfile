@@ -48,7 +48,7 @@ pipeline {
                         // Scan the Docker image with Trivy
                         sh "sudo docker run --rm aquasec/trivy:latest image --no-progress python-app-img || echo 'Failed to scan image'"
                         
-                        echo 'Image scanning completed!!!'
+                        echo 'Image scanning completed...'
                     }
                 }
             }
