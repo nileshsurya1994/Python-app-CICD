@@ -5,7 +5,7 @@ pipeline {
         stage("Code") {
             steps {
                 git url: "https://github.com/nileshsurya1994/Python-app-CICD.git", branch: "main"
-                echo 'Code clone successful...'
+                echo 'Code clone successful.....'
             }
         }
         
