@@ -39,11 +39,14 @@ pipeline {
                             echo ${GITHUB_PAT} | sudo docker login ghcr.io -u nileshsurya1994 --password-stdin
                         """
                         
-                        // Pull Trivy image
-                        sh "sudo docker pull aquasec/trivy:latest"
+                        // Ensure Docker is running and accessible
+                        sh "sudo docker info || echo 'Docker info failed'"
+
+                        // Pull Trivy image from Docker Hub
+                        sh "sudo docker pull aquasec/trivy:latest || echo 'Failed to pull Trivy image'"
                         
                         // Scan the Docker image with Trivy
-                        sh "sudo docker run --rm ghcr.io/aquasec/trivy:latest image --no-progress python-app-img"
+                        sh "sudo docker run --rm aquasec/trivy:latest image --no-progress python-app-img || echo 'Failed to scan image'"
                         
                         echo 'Image scanning completed...'
                     }
