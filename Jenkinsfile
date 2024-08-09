@@ -19,6 +19,7 @@ pipeline {
         stage("Remove Existing Container") {
             steps {
                 sh "sudo docker rm -f python-app-run || true"
+                sh "sudo docker rm -f aquasec/trivy || true"
                 echo 'Existing container removed'
             }
         }
@@ -56,21 +57,6 @@ pipeline {
                 }
             }
         }
-
-        stage('Publish Trivy Report') {
-            steps {
-                publishHTML([target: [
-                    reportDir: 'trivy-report',
-                    reportFiles: 'index.html',
-                    keepAll: true,
-                    alwaysLinkToLastBuild: true,
-                    allowMissing: false,
-                    excludeFiles: '',
-                    includeFiles: ''
-                ]])
-            }
-        }
-    }
 
     post {
         success {
