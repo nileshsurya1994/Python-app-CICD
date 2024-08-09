@@ -19,7 +19,6 @@ pipeline {
         stage("Remove Existing Container") {
             steps {
                 sh "sudo docker rm -f python-app-run || true"
-                sh "sudo docker rm -f aquasec/trivy || true"
                 echo 'Existing container removed'
             }
         }
@@ -52,13 +51,12 @@ pipeline {
                         // Scan the Docker image with Trivy
                         sh "sudo docker run --rm aquasec/trivy:latest image --no-progress python-app-img || echo 'Failed to scan image'"
 
-                        sh "docker run --rm -p 3000:3000 -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image python-app-img"
-
                         echo 'Code and Image scanning completed!!'
                     }
                 }
             }
         }
+    }
 
     post {
         success {
