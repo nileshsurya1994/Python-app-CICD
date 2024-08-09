@@ -59,14 +59,15 @@ pipeline {
 
         stage('Publish Trivy Report') {
             steps {
-                publishHTML(target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
+                publishHTML([target: [
+                    reportDir: 'trivy-report',
+                    reportFiles: 'index.html',
                     keepAll: true,
-                    reportDir: '',
-                    reportFiles: 'trivy-report.html',
-                    reportName: 'Trivy Vulnerability Report'
-                ])
+                    alwaysLinkToLastBuild: true,
+                    allowMissing: false,
+                    excludeFiles: '',
+                    includeFiles: ''
+                ]])
             }
         }
     }
