@@ -46,7 +46,7 @@ pipeline {
                         sh "sudo docker pull aquasec/trivy:latest || echo 'Failed to pull Trivy image'"
                         
                         // Scan the codebase with Trivy
-                        sh "sudo docker run --rm -v $(pwd):/src aquasec/trivy:latest fs /src || echo 'Failed to scan code'"
+                        sh 'sudo docker run --rm -v $(pwd):/src aquasec/trivy:latest fs /src || echo "Failed to scan code"'
 
                         // Scan the Docker image with Trivy
                         sh "sudo docker run --rm aquasec/trivy:latest image --no-progress python-app-img || echo 'Failed to scan image'"
@@ -57,7 +57,7 @@ pipeline {
             }
         }
     }
-    
+
     post {
         success {
             echo 'Pipeline successfully executed!'
