@@ -32,12 +32,12 @@ pipeline {
         
         stage("Scan Code and Image") {
             steps {
-                script {
-                    withCredentials([string(credentialsId: 'github-pat', variable: 'GITHUB_PAT')]) {
+                //script {
+                    //withCredentials([string(credentialsId: 'github-pat', variable: 'GITHUB_PAT')]) {
                         // Authenticate Docker with GitHub Container Registry
-                        sh """
-                            echo ${GITHUB_PAT} | sudo docker login ghcr.io -u nileshsurya1994 --password-stdin
-                        """
+                        //sh """
+                            //echo ${GITHUB_PAT} | sudo docker login ghcr.io -u nileshsurya1994 --password-stdin
+                        //"""
                         
                         // Ensure Docker is running and accessible
                         sh "sudo docker info || echo 'Docker info failed'"
